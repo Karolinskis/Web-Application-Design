@@ -91,6 +91,17 @@ namespace RentalManagement
                 options.EnableAnnotations(); // FIXME: Might not be needed. Needed for Swashbuckle Annotations
             });
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                    });
+            });
+
             var app = builder.Build();
 
 
@@ -148,6 +159,8 @@ namespace RentalManagement
                     c.RoutePrefix = string.Empty;
                 });
             }
+
+            app.UseCors("AllowAllOrigins");
 
             app.UseHttpsRedirection();
             app.UseResponseCaching();

@@ -20,5 +20,23 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__RentalManagementContext=Host=postgres;Port=5432;Database=rental_management;Username=postgres;Password=postgrespw
 
+  frontend:
+    build:
+      context: ./rental-management-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - rentalmanagement
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+      - FAST_REFRESH=false
+      - WDS_SOCKET_PORT=3000
+      - REACT_APP_API_URL=http://localhost:8080/api
+    volumes:
+      - ./rental-management-frontend:/app
+      - /app/node_modules
+
 volumes:
   postgres_data:

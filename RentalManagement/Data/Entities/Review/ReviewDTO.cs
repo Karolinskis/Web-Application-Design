@@ -1,3 +1,5 @@
+using RentalManagement.Auth;
+
 namespace RentalManagement.Entities.DTOs;
 
 public class ReviewDTO
@@ -11,11 +13,14 @@ public class ReviewDTO
     /// <example>Great place!</example>
     public string Comment { get; set; }
 
-    public ReviewDTO(int id, int reservationId, int rating, string comment)
+    public User User { get; set; }
+
+    public ReviewDTO(int id, int reservationId, int rating, string comment, User user)
     {
         Id = id;
         ReservationId = reservationId;
         Rating = rating;
         Comment = comment;
+        User = user;
     }
 }
